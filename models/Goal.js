@@ -1,19 +1,23 @@
 const mongoose=require('mongoose')
 
 const GoalSchema=new mongoose.Schema({
-    Goalname:{
+    goalName:{
         type: String,
         required: true
     },
-    Startdate:{
-        type:String,
+    startDate:{
+        type:Date,
         required:true,
     },
-    Enddate:{
-        type:String,
+    endDate:{
+        type:Date,
         required:true,
     },
-    User:{
+    description:{
+        type:String,
+        required:false,
+    },
+    user:{
         type:mongoose.Schema.Types.ObjectId,
         ref:'User',
     },
