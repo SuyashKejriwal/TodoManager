@@ -1,0 +1,32 @@
+<div class="goal-box">
+    <a href="/"><img src="/images/Logo_Todo.png" alt="Logo" class=logo></a>
+    <h1>Add a Goal</h1>
+
+    <form action="/goals/add" method="POST">
+
+        <input 
+        type="text" 
+        placeholder="Goal Name"
+        >
+
+        <p>Start Date:</p>
+        <input 
+        type="date"
+        name="startDate">
+
+        <p>End Date:</p>
+        <input 
+        type="date"
+        name="endDate">
+
+        <p> Description:</p>
+        <textarea rows="4" 
+        cols="40" 
+        name="description"
+        placeholder="Write description if any" value=""></textarea>
+    
+        <button type="submit">Add Goal</button>
+    
+    </form>
+</div>
+

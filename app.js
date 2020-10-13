@@ -60,6 +60,7 @@ app.use(express.static(path.join(__dirname,'public')))
 // Routes
 app.use('/',require('./routes/index'))
 app.use('/users',require('./routes/users'))
+app.use('/goals',require('./routes/goals'))
 
 // Listen to port
 const PORT=process.env.PORT||5000

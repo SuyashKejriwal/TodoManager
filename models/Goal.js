@@ -14,13 +14,13 @@ const GoalSchema=new mongoose.Schema({
         required:true,
     },
     User:{
-        type:String,
-        ref:User,
+        type:mongoose.Schema.Types.ObjectId,
+        ref:'User',
     },
     createdAt:{
         type:Date,
         default:Date.now,
     }
 })
-const User=mongoose.model('User',UserSchema)
-module.exports=User;
+const Goal=mongoose.model('Goal',GoalSchema)
+module.exports=Goal;

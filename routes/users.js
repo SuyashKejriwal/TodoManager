@@ -5,6 +5,8 @@ var validator = require("email-validator");
 const passport=require('passport')
 const User=require('../models/User')
 
+//@parentroute /users
+
 //@desc Show user register page
 //@route GET/register
 router.get('/register', (req, res) => {
