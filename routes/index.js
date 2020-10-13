@@ -18,8 +18,10 @@ router.get('/',ensureGuest,(req, res,next) => {
 router.get('/dashboard',ensureAuth,(req,res)=>{
   console.log(req.user);
   res.render('listmenu',{
+    layout: 'layouts/main',
     title: 'Todo Manager - Dashboard',
-    css:'css/register.css'
+    css:'css/listmenu.css',
+    name: req.user.name,
   })
 })
 module.exports=router;
