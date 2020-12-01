@@ -24,9 +24,10 @@ app.use(express.json())
 
 // Express Sessions
 app.use(session({
-    secret: 'secret',
-    resave: true,
-    saveUninitialized: true,
+    secret: 'secret',             //passcode for session
+    resave: true,                //save even if nothing is modified
+    maxAge: 36000000,           //expires in 10 hrs
+    saveUninitialized: true,   //save the uninitialized value also
   }))
 
 // Passport middleware 
@@ -58,12 +59,12 @@ app.set('view engine','ejs')
 app.use(express.static(path.join(__dirname,'public')))
 
 // Routes
-app.use('/',require('./routes/index'))
-app.use('/users',require('./routes/users'))
-app.use('/goals',require('./routes/goals'))
+app.use('/',require('./routes/indexRoutes'))
+app.use('/users',require('./routes/userRoutes'))
+app.use('/goals',require('./routes/goalRoutes'))
 
 // Listen to port
-const PORT=process.env.PORT||5000
+const PORT=process.env.PORT||3000
 
 app.listen(PORT,
     console.log(`Server running in ${process.env.NODE_ENV} mode on port ${PORT}`))
