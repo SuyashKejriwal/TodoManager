@@ -148,10 +148,46 @@ const Logout=(req,res,next)=>{
     res.redirect('/users/login')
 }
 
+//@desc Show Profile of user
+//@route GET/users/profile
+//@access Private
+const showProfilePage= async (req,res,next)=> {
+  try {
+    let user=await User.findById(req.user._id)
+     .lean();
+    
+     if(!user){
+      return res.render('screens/NotFoundErrorPage',{
+        title: 'Todo Manager - Not Found'
+      })
+    }else{
+      res.render('screens/ProfilePage',{
+        title: 'Todo Manager - Profile',
+        css: '/css/profile.css',
+        user: user
+      })
+    }
+  } catch (error) {
+    return res.render('screens/NotFoundErrorPage',{
+      title: 'Todo Manager - Not Found'
+    })
+  }  
+}
+
+//@desc Edit Profile of user
+//@desc PUT/users/profile
+//@access Private
+const editProfile=(req,res,next)=>{
+
+}
+
+
 module.exports={
     showRegisterPage,
     addUser,
     showLoginPage,
     checkLogin,
-    Logout
+    Logout,
+    showProfilePage,
+    editProfile
 }

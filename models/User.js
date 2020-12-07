@@ -13,6 +13,18 @@ const UserSchema=new mongoose.Schema({
         type:String,
         required:true,
     },
+    image:{
+       type:String,
+       default:'images/blank'
+    },
+    phone:{
+        type:Number,
+        default: 0
+    },
+    address:{
+        type:String,
+        default:'NA'
+    },
     createdAt:{
         type:Date,
         default:Date.now,

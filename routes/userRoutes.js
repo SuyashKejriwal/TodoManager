@@ -4,7 +4,9 @@ const { showRegisterPage,
        addUser,
        showLoginPage,
        checkLogin,
-       Logout
+       Logout,
+       showProfilePage,
+       editProfile
   }=require('../controllers/UserController')
 const { ensureGuest,ensureAuth } = require('../middleware/auth');
 
@@ -34,5 +36,15 @@ router.post('/login',checkLogin )
 // @route GET/users/logout
 //@access Private
 router.get('/logout',ensureAuth,Logout)
+
+//@desc Show Profile of user
+//@route GET/users/profile
+//@access Private
+router.get('/profile',ensureAuth,showProfilePage)
+
+//@desc Edit Profile of user
+//@desc PUT/users/profile
+//@access Private
+router.put('/profile',ensureAuth,editProfile)
 
 module.exports=router;

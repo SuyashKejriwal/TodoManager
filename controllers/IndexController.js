@@ -1,4 +1,4 @@
-
+const Goal=require('../models/Goal')
 //@desc Show Home Page
 //@route GET/
 //@access Public
@@ -11,19 +11,24 @@ const showHomePage=(req, res,next) => {
      });
    }
 
-//@desc Show Dashboard Page
+//@desc Show Dashboard Page with all goals
 //@route GET/dashboard
 //@access Private
-const showDashboardPage=(req,res)=>{
-  
-  console.log(req.user);
-   
-  res.render('screens/DashboardPage',{
-    layout: 'layouts/main',
-    title: 'Todo Manager - Dashboard',
-    css:'css/dashboard.css',
-    name: req.user.name,
-  })
+const showDashboardPage=async (req,res)=>{
+  try {
+    console.log(req.user);
+    const goals=await Goal.find({user:req.user.id}).lean() ;
+
+    res.render('screens/DashboardPage',{
+      layout: 'layouts/main',
+      title: 'Todo Manager - Dashboard',
+      css:'css/dashboard.css',
+      name: req.user.name,
+      goals: goals
+    })
+  } catch (error) {
+    
+  }
  
   }
 
