@@ -5,20 +5,31 @@ const TaskSchema=new mongoose.Schema({
         type: String,
         required: true
     },
-    description:{
+    priority:{
         type:String,
-        required:false,
+        required:true,
     },
-    user:{
-        type:mongoose.Schema.Types.ObjectId,
-        ref:'User',
+    taskType:{
+        type:String,
+        required:true,
+    },
+    target:{
+        type:Number,
+        required:false,
     },
     goal:{
         type:mongoose.Schema.Types.ObjectId,
         ref:'Goal',
+    },
+    user:{
+        type:mongoose.Schema.Types.ObjectId,
+        ref:'User',
     },
     createdAt:{
         type:Date,
         default:Date.now,
     }
 })
+
+const Task=mongoose.model('Task',TaskSchema)
+module.exports=Task;

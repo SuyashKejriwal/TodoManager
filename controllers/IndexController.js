@@ -24,7 +24,8 @@ const showDashboardPage=async (req,res)=>{
       title: 'Todo Manager - Dashboard',
       css:'css/dashboard.css',
       name: req.user.name,
-      goals: goals
+      goals: goals,
+      helper: require('../helpers/ejshelper'),
     })
   } catch (error) {
     
@@ -45,12 +46,39 @@ const showCalendarPage=(req,res)=>{
     css:'css/calendar.css',
     js: 'js/calendar.js',
     name: req.user.name,
+    helper: require('../helpers/ejshelper'),
   })
  
   }
 
+//@desc Show calendar page
+//@route GET/calendar
+//@access Private 
+const showReportPage=async (req,res)=>{
+  try{
+    console.log(req.user);
+    const goals=await Goal.find({user:req.user.id}).lean() ;
+
+    
+  res.render('screens/ReportPage',{
+    layout: 'layouts/main',
+    title: 'Todo Manager - Report',
+    css:'css/report.css',
+    goals,
+    name: req.user.name,
+    helper: require('../helpers/ejshelper'),
+  })
+ 
+  }catch(err){
+
+  }
+  
+  }
+
+
 module.exports={
     showHomePage,
     showDashboardPage,
-    showCalendarPage
+    showCalendarPage,
+    showReportPage
 }

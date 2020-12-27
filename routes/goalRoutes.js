@@ -5,6 +5,7 @@ const { showGoalPage,
          addGoal,
          removeGoal,
          editGoal,
+         showEditGoalPage,
         showSingleGoal } =require('../controllers/GoalController')
 
 //@parentroute /goals
@@ -22,17 +23,23 @@ router.post('/add',ensureAuth,addGoal )
 //@desc Show goal Details page
 //@route GET/goal/:id
 //@access Private
-router.get('/goal/:id',ensureAuth,showSingleGoal)
+router.get('/:id',ensureAuth,showSingleGoal)
+
+//@desc Show edit goal page
+//@route GET goals/edit/:id
+//@access Private
+router.get('/edit/:id',ensureAuth,showEditGoalPage)
+
 
 //@desc Update Goal
 //@route PUT goal/:id
 //@access Private
-router.put('/goal/:id',ensureAuth,editGoal)
+router.put('/:id',ensureAuth,editGoal)
 
 //@desc Delete Goal
 //@route DELETE goal/:id
 //@access Private
-router.delete('/goal/:id',ensureAuth,removeGoal)
+router.delete('/:id',ensureAuth,removeGoal)
 
 module.exports=router;
 

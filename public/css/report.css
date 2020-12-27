@@ -195,3 +195,10 @@
     font-weight: bold;
   }
   
+  progress {height: 20px;}
+.progress .sr-only { position: relative; }
+
+.noprogress{
+    color:white;
+    font-weight: bold;
+  }

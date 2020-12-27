@@ -5,7 +5,8 @@ const { ensureAuth,
         ensureGuest }=require('../middleware/auth')
 const { showHomePage,
        showDashboardPage, 
-       showCalendarPage} =require('../controllers/IndexController')
+       showCalendarPage,
+       showReportPage } =require('../controllers/IndexController')
 const Goal=require('../models/Goal')
 //@parentroute /
 
@@ -23,5 +24,10 @@ router.get('/dashboard',ensureAuth,showDashboardPage)
 //@route GET/calendar
 //@access Private 
 router.get('/calendar',ensureAuth, showCalendarPage )
+
+//@desc Show report page
+//@route GET/report
+//@access Private 
+router.get('/report',ensureAuth, showReportPage )
 
 module.exports=router;

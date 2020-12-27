@@ -16,12 +16,20 @@ const showGoalPage=(req,res)=>{
 //@route POST/goals/add
 //@access Private
 const addGoal=(req,res)=>{
-    console.log(req.user);
+    //console.log(req.user);
     req.body.user=req.user.id
-    console.log(req.body.user);
-   var { goalName,startDate,endDate,description,user}=req.body;
-   let errors=[];
-   console.log(req.user);
+   // console.log(req.body.user);
+   var { goalName,description,user}=req.body;
+   // calculation of total days
+const startDate=new Date(req.body.startDate);
+
+const endDate=new Date(req.body.endDate);
+   
+let errors=[];
+var today=new Date();
+console.log(today);
+var time_in_day=(today.getTime()-startDate.getTime())/(1000*3600*24);
+console.log(time_in_day);
    // Check required fields
    if(!goalName||!startDate||!endDate){
     errors.push({msg:'Please fill in all the fields'})
@@ -36,14 +44,41 @@ const addGoal=(req,res)=>{
       description
   })
    }
+   else if(startDate.getTime()>endDate.getTime()){
+    errors.push({msg:'Start Date must be before End Date'})
+    // send details to prepopulate form
+    res.render('screens/AddGoalPage', {
+      title: 'Todo Manager - Add Goal ',
+      css: '/css/goal.css',
+      errors,
+      goalName,
+      description
+  })
+   }
+  //  else if(today.getTime()>startDate.getTime()){
+  //    errors.push({msg:'Start Date should be after today'})
+  //    // send details to prepopulate form
+  //    res.render('screens/AddGoalPage', {
+  //     title: 'Todo Manager - Add Goal ',
+  //     css: '/css/goal.css',
+  //     errors,
+  //     goalName,
+  //     description
+  // })
+  //  }
    else {
-     //Validation passed 
+     //Validation passed
+     const diff_in_time=endDate.getTime()-startDate.getTime();
+     
+     const totalDays=diff_in_time/(1000*3600*24) + 1;
+
      // create an object for goal
      const newGoal=new Goal({
           goalName,
           startDate,
           endDate,
           description,
+          totalDays,
           user
      });
      console.log(newGoal);
@@ -65,13 +100,37 @@ const addGoal=(req,res)=>{
   //@access Private
   const removeGoal=async (req,res )=> {
     try{
-      await Story.remove({_id:req.params.id })
+      await Goal.remove({_id:req.params.id })
       res.redirect('/dashboard')
 
     }catch(err){
       return res.render('screens/NotFoundErrorPage',{
         title: 'Todo Manager - Not Found'
       })
+    }
+  }
+
+  const showEditGoalPage=async (req,res )=> {
+    try{
+      let goal= await Goal.findById(req.params.id).lean();
+      
+      if(!goal){
+        return res.render('screens/NotFoundErrorPage',{
+          title: 'Todo Manager - Not Found'
+        })
+      }
+      else{
+        res.render('screens/EditGoalPage',{
+          title: 'Todo Manager - Edit Goal ',
+          goal,
+          css: '/css/goal.css',
+          helper: require('../helpers/ejshelper')
+        });
+      }
+      
+    }
+    catch(err){
+
     }
   }
 
@@ -102,38 +161,39 @@ const editGoal=async(req,res) => {
 }
 
 //@desc Show goal Details page
-//@route GET/goal/:id
+//@route GET/goals/:id
 //@access Private
-const showSingleGoal=async(req,res) => {
+const showSingleGoal=async (req,res) => {
   try{
-    const goal=await Goal.findById(req.params.id).lean();
-
-    if(!goal){
-      return res.render('screens/NotFoundErrorPage',{
-        title: 'Todo Manager - Not Found'
-      })
-    }else{
-      const tasks=Task.find({
-        goal: req.params.id
-      }).lean();
-
+    // const goal=await Goal.findById(req.params.id).lean();
+    const tasks=await Task.find({
+      goal: req.params.id
+    });
+   //console.log(tasks);
+    
+  // console.log(tasks);
       res.render('screens/GoalDetailsPage',{
         layout: 'layouts/main',
          title: 'Todo Manager - Goal Page',
-           css: 'css/home.css'
+           css: '/css/dashboard.css',
+           goal_id:req.params.id,
+           tasks:tasks,
+           name: req.user.name
       });      
-    }
+    
   }catch(error){
+    //console.log(tasks);
+    //console.log(error);
     return res.render('screens/NotFoundErrorPage',{
       title: 'Todo Manager - Not Found'
     })
   }}
-
 
 module.exports={
     showGoalPage,
     addGoal,
     removeGoal,
     editGoal,
+    showEditGoalPage,
     showSingleGoal
 }

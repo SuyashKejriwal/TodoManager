@@ -3,6 +3,7 @@ const dotenv=require('dotenv')
 const morgan=require('morgan')
 const flash=require('connect-flash')
 const session=require('express-session')
+const methodOverride=require('method-override')
 const path=require('path')
 const passport=require('passport')
 const connectDB=require('./config/db')
@@ -21,6 +22,17 @@ require('./middleware/passport')(passport);
 // Body Parser
 app.use(express.urlencoded({extended:false}))
 app.use(express.json()) 
+
+//Method override 
+app.use(methodOverride(function (req, res) {
+  if (req.body && typeof req.body === 'object' && '_method' in req.body) {
+    // look in urlencoded POST bodies and delete it
+    let method = req.body._method
+    delete req.body._method
+    return method
+  }
+}))
+
 
 // Express Sessions
 app.use(session({
@@ -62,6 +74,7 @@ app.use(express.static(path.join(__dirname,'public')))
 app.use('/',require('./routes/indexRoutes'))
 app.use('/users',require('./routes/userRoutes'))
 app.use('/goals',require('./routes/goalRoutes'))
+app.use('/tasks',require('./routes/TaskRoutes'))
 
 // Listen to port
 const PORT=process.env.PORT||3000

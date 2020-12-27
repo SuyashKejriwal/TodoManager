@@ -2,6 +2,8 @@ const bcrypt=require('bcryptjs')
 var validator = require("email-validator")
 const passport=require('passport')
 const User=require('../models/User')
+const multer=require('multer')
+const upload =multer({dest: 'uploads/'})
 
 //@desc Show user register page
 //@route GET/users/register
