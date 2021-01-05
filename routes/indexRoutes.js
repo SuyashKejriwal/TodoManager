@@ -6,7 +6,9 @@ const { ensureAuth,
 const { showHomePage,
        showDashboardPage, 
        showCalendarPage,
-       showReportPage, 
+       showReportPage,
+       showListMenuPage,
+       showTaskDashboardPage,
        homeIcon} =require('../controllers/IndexController')
 const Goal=require('../models/Goal')
 //@parentroute /
@@ -35,5 +37,15 @@ router.get('/report',ensureAuth, showReportPage )
 //@route GET/home
 //@access Private 
 router.get('/home',ensureAuth, homeIcon )
+
+//@desc Go to List menu page
+//@route GET/listmenu
+//@access Private
+router.get('/listmenu',ensureAuth,showListMenuPage )
+
+//@desc Go to task Dashboard page
+//@route GET/taskDashboard
+//@access Private
+router.get('/taskDashboard',ensureAuth,showTaskDashboardPage );
 
 module.exports=router;
