@@ -6,7 +6,8 @@ const { ensureAuth,
 const { showHomePage,
        showDashboardPage, 
        showCalendarPage,
-       showReportPage } =require('../controllers/IndexController')
+       showReportPage, 
+       homeIcon} =require('../controllers/IndexController')
 const Goal=require('../models/Goal')
 //@parentroute /
 
@@ -29,5 +30,10 @@ router.get('/calendar',ensureAuth, showCalendarPage )
 //@route GET/report
 //@access Private 
 router.get('/report',ensureAuth, showReportPage )
+
+//@desc Go to Home Page on clicking home icon
+//@route GET/home
+//@access Private 
+router.get('/home',ensureAuth, homeIcon )
 
 module.exports=router;

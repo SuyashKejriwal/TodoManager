@@ -38,6 +38,7 @@
                             <th>Target </th>
                             <th>Edit</th>
                             <th>Delete</th>
+                            <th>Progress</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -45,7 +46,12 @@
                             <td><a href="/tasks/<%= task._id %>" ><%= task.taskName %></a></td>
                                 <td><%= task.priority %></td>
                                 <td><%= task.taskType %></td>
-                                <td><%= task.target %></td>
+                                <td><% if(task.target) { %>
+                                    <%= task.target %>
+                                    <%} else { %>
+                                     N/A  
+                                     <% } %>
+                                </td>
                                 <td>
                                     <a href="/tasks/edit/<%= task._id %>" >
                                         <button class="btn btn-primary badge-pill" style="width:80px;"> 
@@ -60,6 +66,13 @@
                                         <i class="fa fa-trash" aria-hidden="true"></i>
                                     </button>
                                 </form>
+                                </td>
+                                <td>
+                                    <a href="/tasks/editProgress/<%= task._id %>" >
+                                        <button class="btn btn-success badge-pill" style="width:80px;"> 
+                                            <i class="fa fa-spinner"></i>
+                                        </button>
+                                    </a> 
                                 </td>
                         <% }) %>
                         

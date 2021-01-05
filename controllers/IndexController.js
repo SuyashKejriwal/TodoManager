@@ -73,12 +73,21 @@ const showReportPage=async (req,res)=>{
 
   }
   
-  }
+}
 
+//@desc Go to home page on clicking home icon
+//@route GET/home
+//@access Private 
+const homeIcon=(req,res,next) => {
+  // first it will logout and then redirect to home page
+  req.logout();
+  res.redirect('/')
+}
 
 module.exports={
     showHomePage,
     showDashboardPage,
     showCalendarPage,
-    showReportPage
+    showReportPage,
+    homeIcon
 }
