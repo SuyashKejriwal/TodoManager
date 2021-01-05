@@ -1,0 +1,47 @@
+<div class="task-box">
+    <img src="/images/Logo_Todo.png" alt="" class=logo>
+    <h1>Edit Task</h1>
+
+    <form action="/tasks/<%= task._id %>" method="POST">
+        <input type="hidden" name="_method" value="PUT">
+        <input type="text" 
+        placeholder="Task Name" 
+        value="<%= task.name %>" 
+        name="taskName">
+        
+       <div>
+        <p>Priority:</p>
+       High <input type="radio" id="high" name="priority" value="high">
+  
+       Low <input type="radio" id="low" name="priority" value="low">
+
+  </div>
+
+               
+<br>
+            <div>
+                <p>Task Type:</p>
+                YES/NO <input type="radio" id="yes_or_no" name="taskType" value="yes_or_no">               
+               Numerical <input type="radio" id="numerical" name="taskType" value="numerical">
+   
+           </div>
+<br>
+           <div>
+            <p>Target:</p>
+             <input type="text" 
+             placeholder="Input Target"
+             value="<%= task.target %>" 
+             name="target" >               
+           </div>
+
+
+        <!-- <p> Description:</p>
+        <textarea rows="3" cols="30" name="description">
+             </textarea> -->
+        <!---- Description:<input type="text" placeholder="Write here"> -->
+        <input type="hidden" id="goal" name="goal" value="<%= task.goal %>">           
+           
+        <button type="submit">Edit Task</button>
+
+    </form>
+</div>

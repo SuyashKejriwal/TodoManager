@@ -2,7 +2,7 @@
     <a href="/"><img src="/images/Logo_Todo.png" alt="Logo" class=logo></a>
     <h1>Edit Goal</h1>
     <%- include('../components/messages.ejs') %>
-    <form action="/goals/edit/<%= goal._id %>" method="POST">
+    <form action="/goals/<%= goal._id %>" method="POST">
         <input type="hidden" name="_method" value="PUT">
         <input 
         type="text" 
@@ -15,21 +15,21 @@
         <input 
         type="text"
         name="startDate"
-        value="<%= helper.formatDate(goal.startDate,'dd mm yyyy') %>"
+        value="<%= helper.formatDate(goal.startDate,'MM/DD/YYYY') %>"
         >
 
         <p>End Date:</p>
         <input 
-        type="date"
+        type="text"
         name="endDate"
-        value="<%= typeof endDate != 'undefined' ? endDate : '' %>">
+        value="<%= helper.formatDate(goal.endDate,'MM/DD/YYYY') %>">
 
         <p> Description:</p>
         <textarea rows="4" 
         cols="40" 
         name="description"
         placeholder="Write description if any" 
-        value="<%= typeof description != 'undefined' ? description : '' %>"
+        value="<%= goal.description %>"
         ></textarea>
     
         <button type="submit">Edit Goal</button>

@@ -25,6 +25,11 @@ const TaskSchema=new mongoose.Schema({
         type:mongoose.Schema.Types.ObjectId,
         ref:'User',
     },
+    progress:{
+        type:Number,
+        required:false,
+        default:0
+    },
     createdAt:{
         type:Date,
         default:Date.now,

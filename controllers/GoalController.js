@@ -16,7 +16,6 @@ const showGoalPage=(req,res)=>{
 //@route POST/goals/add
 //@access Private
 const addGoal=(req,res)=>{
-    //console.log(req.user);
     req.body.user=req.user.id
    // console.log(req.body.user);
    var { goalName,description,user}=req.body;
@@ -55,6 +54,7 @@ console.log(time_in_day);
       description
   })
    }
+  // *********UNCOMMENT IT BEFORE FINAL RUN ****************
   //  else if(today.getTime()>startDate.getTime()){
   //    errors.push({msg:'Start Date should be after today'})
   //    // send details to prepopulate form
@@ -139,19 +139,51 @@ console.log(time_in_day);
 //@access Private
 const editGoal=async(req,res) => {
   try {
-    let goal= await Goal.findById(req.params.id).lean();
+    let goal= await Goal.findById(req.params.id);
+    req.body.user=req.user.id;
+    const {name,description,user}=req.body;
 
+    const startDate=new Date(req.body.startDate);
+    console.log(startDate);
+    const endDate=new Date(req.body.endDate);
+    console.log(endDate);
+    
     if(!goal){
       return res.render('screens/NotFoundErrorPage',{
         title: 'Todo Manager - Not Found'
       })
     }else{
-      goal=await goal.findOneAndUpdate({_id:req.params.id},req.body,{
-        new:true,
-        runValidators:true,
+    //First check for client side validations-  mostly date errors
+    if(startDate.getTime()>endDate.getTime()){
+      errors.push({msg:'Start Date must be before End Date'})
+      // send details to prepopulate form
+      res.render('screens/EditGoalPage', {
+          title: 'Todo Manager - Edit Goal ',
+          goal,
+          css: '/css/goal.css',
+          helper: require('../helpers/ejshelper')
     })
+    
+     }  else{
+         //Validation passed
+     const diff_in_time=endDate.getTime()-startDate.getTime();
+     
+     const totalDays=diff_in_time/(1000*3600*24) + 1;
+     
+     goal.name=name;
+     goal.startDate=startDate;
+     goal.endDate=endDate;
+     goal.totalDays=totalDays;
+     goal.description=description;
+     goal.user=user
 
-    res.redirect('/dashboard')
+     // now finally update the goal.
+     const updatedGoal=await goal.save();
+      // after successfully updating redirect to dashboard
+      res.redirect('/dashboard')
+
+     }
+
     }
   } catch (error) {
     return res.render('screens/NotFoundErrorPage',{

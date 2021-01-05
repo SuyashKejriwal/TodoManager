@@ -4,11 +4,15 @@ const { ensureAuth }=require('../middleware/auth')
 const {
    showAddTaskPage,
    addTask,
-   singleTask,
+   showEditTaskPage,
    editTask,
+   showEditTaskProgressPage,
    removeTask
 }=require('../controllers/TaskController')
 
+//@desc Show add task page
+//@route GET /tasks/add/goal/:id
+//@access Private
 router.get('/add/goal/:id',ensureAuth,showAddTaskPage);
 
 //@desc Add Task in database
@@ -16,19 +20,24 @@ router.get('/add/goal/:id',ensureAuth,showAddTaskPage);
 //@access Private
 router.post('/add',ensureAuth,addTask)
 
-//@desc Show single Task 
-//@route GET tasks/:id
-//@access Private
-router.get('/:id',ensureAuth,singleTask)
-
 //@desc delete task
 //@route DELETE task/:id
 //@access Private
 router.delete('/:id/goals/:id',ensureAuth,removeTask)
 
+//@desc Show Edit Task Page
+//@route GET tasks/edit/:id
+//@access Private
+router.get('/edit/:id',ensureAuth,showEditTaskPage)
+
 //@desc edit task
-//@route PUT task/:id
+//@route PUT tasks/:id
 //@access Private
 router.put('/:id',ensureAuth,editTask)
+
+//@desc Show edit task progress page
+//@route GET tasks/editProgress/:id
+//@access Private
+router.get('/editProgress/:id',ensureAuth,showEditTaskProgressPage)
 
 module.exports=router;

@@ -63,8 +63,27 @@ const removeTask=async(req,res) => {
     }
 }
 
+//@desc Show Edit Task Page
+//@route GET edit/:id
+//@access Private
+const showEditTaskPage=async(req,res) => {
+  try{
+    const task = await Task.findById(req.params.id).lean();
+
+    res.render('screens/EditTaskPage',{
+      title: 'Todo Manager- Edit Task',
+      css: '/css/task.css',
+      task: task
+    })
+  }catch(error){
+    return res.render('screens/NotFoundErrorPage', {
+        title: 'Todo Manager- Not Found'
+    })
+  }
+}
+
 //@desc Edit Task in Database
-//@route PUT task/:id
+//@route PUT tasks/:id
 //@access Private
 const editTask=async(req,res) =>{
     try {
@@ -74,22 +93,30 @@ const editTask=async(req,res) =>{
     }
 }
 
-//@desc Show single Task 
-//@route GET task/:id
+//@desc Show edit task progress page
+//@route GET tasks/editProgress/:id
 //@access Private
-const singleTask=async(req,res) =>{
-    try {
-        
-    } catch (error) {
-        
-    }
-}
+const showEditTaskProgressPage=async(req,res) => {
+  try{
+    const task = await Task.findById(req.params.id).lean();
 
+    res.render('screens/EditTaskProgressPage',{
+      title: 'Todo Manager- Edit Task',
+      css: '/css/task.css',
+      task: task
+    })
+  }catch(error){
+    return res.render('screens/NotFoundErrorPage', {
+      title: 'Todo Manager- Not Found'
+    })
+  }
+}
 
 module.exports={
     showAddTaskPage,
     addTask,
     removeTask,
+    showEditTaskPage,
     editTask,
-    singleTask
+    showEditTaskProgressPage
 }

@@ -32,12 +32,12 @@ router.get('/edit/:id',ensureAuth,showEditGoalPage)
 
 
 //@desc Update Goal
-//@route PUT goal/:id
+//@route PUT goals/:id
 //@access Private
 router.put('/:id',ensureAuth,editGoal)
 
 //@desc Delete Goal
-//@route DELETE goal/:id
+//@route DELETE goals/:id
 //@access Private
 router.delete('/:id',ensureAuth,removeGoal)
 

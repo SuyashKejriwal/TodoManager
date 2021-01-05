@@ -16,6 +16,7 @@ const GoalSchema=new mongoose.Schema({
     description:{
         type:String,
         required:false,
+        default: ''
     },
     totalDays: {
         type:Number,
