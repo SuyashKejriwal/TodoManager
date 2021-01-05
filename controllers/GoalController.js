@@ -100,9 +100,28 @@ console.log(time_in_day);
   //@access Private
   const removeGoal=async (req,res )=> {
     try{
-      await Goal.remove({_id:req.params.id })
-      res.redirect('/dashboard')
+      const goal=await Goal.findById(req.params.id);
+      console.log(goal);
+      if(goal){
+        const task=await Task.find({goal: goal})
+        console.log(task);
+        // Firstly delete all the tasks under it
+        if(task){
+        await Task.remove({goal: goal});
+        }
+        
+        // Now delete the goal
+        await Goal.remove({_id: req.params.id });
 
+        //after deleting redirect to dashboard
+        res.redirect('/dashboard')
+
+      }else{
+        return res.render('screens/NotFoundErrorPage',{
+          title: 'Todo Manager - Not Found'
+        })
+      }      
+      // await Goal.remove({_id:req.params.id })
     }catch(err){
       return res.render('screens/NotFoundErrorPage',{
         title: 'Todo Manager - Not Found'

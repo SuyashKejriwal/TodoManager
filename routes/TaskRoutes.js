@@ -23,7 +23,7 @@ router.post('/add',ensureAuth,addTask)
 //@desc delete task
 //@route DELETE task/:id
 //@access Private
-router.delete('/:id/goals/:id',ensureAuth,removeTask)
+router.delete('/:id/goal/:goalId',ensureAuth,removeTask)
 
 //@desc Show Edit Task Page
 //@route GET tasks/edit/:id

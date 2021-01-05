@@ -50,12 +50,15 @@ const addTask=async(req,res)=> {
 }
 
 //@desc Delete Task from Database
-//@route DELETE task/:id
+//@route DELETE task/:id/goal/:goalid
 //@access Private
 const removeTask=async(req,res) => {
     try {
-      await Task.remove({_id:req.params.id })
-      res.redirect(``)
+      const task=await Task.findById(req.params.id);
+      if(task){
+        await Task.remove({_id: req.params.id });
+      }
+      res.redirect(`/goals/${req.params.goalId}`)
     } catch (error) {
         return res.render('screens/NotFoundErrorPage',{
             title: 'Todo Manager - Not Found'

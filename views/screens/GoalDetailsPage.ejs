@@ -43,7 +43,7 @@
                     </thead>
                     <tbody>
                         <% tasks.forEach(function(task){ %>
-                            <td><a href="/tasks/<%= task._id %>" ><%= task.taskName %></a></td>
+                            <td><a href="/tasks/<%= task._id %>/goal/<%= goal_id %>" ><%= task.taskName %></a></td>
                                 <td><%= task.priority %></td>
                                 <td><%= task.taskType %></td>
                                 <td><% if(task.target) { %>
@@ -60,7 +60,7 @@
                                     </a>
                                 </td>
                                 <td> 
-                                   <form action="/tasks/<%= task._id %>/goals/<%=  %>" method="POST" id="delete-form">
+                                   <form action="/tasks/<%= task._id %>/goal/<%= goal_id %>" method="POST" id="delete-form">
                                     <input type="hidden" name="_method" value="DELETE">
                                     <button class="btn btn-danger badge-pill" style="width:80px;">
                                         <i class="fa fa-trash" aria-hidden="true"></i>
@@ -74,9 +74,10 @@
                                         </button>
                                     </a> 
                                 </td>
-                        <% }) %>
+                        
                         
                     </tbody>
+                    <% }) %>
                 </table>
             
             </div>
