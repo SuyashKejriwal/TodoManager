@@ -6,6 +6,7 @@ const { showGoalPage,
          removeGoal,
          editGoal,
          showEditGoalPage,
+         showSingleGoal,
         showTaskReportPage } =require('../controllers/GoalController')
 
 //@parentroute /goals
