@@ -1,5 +1,5 @@
 const moment = require('moment')
-
+const Goal=require('../models/Goal')
 module.exports = {
 
   // format date in a good way.
@@ -52,7 +52,12 @@ module.exports = {
       activegoal=true;
     }
     return activegoal;
-  }
+  },
 
- 
+ returnGoalName: function(task){
+  var goalId=task.goal._id;
+  const goal=Goal.findById(goalId);
+  console.log(goal.goalName);
+  return goal.goalName;
+ }
 }

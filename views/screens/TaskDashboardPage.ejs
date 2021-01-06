@@ -1,0 +1,91 @@
+<!-- Nav Bar Section -->
+<%- include('../components/nav-bar-dashboard.ejs') %>
+
+<!----------------SideBarSection---------------------->
+<%- include('../components/side-bar-dashboard.ejs') %>
+
+<div id="main">
+    <h5>Welcome <%=name %></h5>
+    <div class="card">
+        
+            <div class="card-header">
+                <div class="row">
+                    <div class="col-md-4">
+                        <h5>Tasks</h5>
+                    </div>
+                    <div class="col-md-4">
+                    </div>
+                    <div class="col-md-4">
+                        
+                    </div>
+                </div>
+                </div>
+            <div class="card-body">
+                <% if(tasks.length<1) { %>
+                    <h6  class="nogoals" >
+                        You have not created any tasks.Click on add tasks button at right side to create new tasks</h6>
+                <% }else { %>
+                <table class="table table-dark table-hover table-bordered">
+                    <thead >
+                        <tr>
+                            <th>Task Name</th>
+                            <th>Goal Name</th>
+                            <th>Task Type</th>
+                            <th>Target </th>
+                            <th>Completed</th>
+                            <th>Edit</th>
+                            <th>Delete</th>
+                            <th>Progress</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <% tasks.forEach(function(task){ %>
+                            <td><a href="/tasks/<%= task._id %>/goal/<%= task.goal._id %>" ><%= task.taskName %></a></td>
+                                <td><%= helper.returnGoalName(task) %></td>
+                                <td><%= task.taskType %></td>
+                                <td><% if(task.target) { %>
+                                    <%= task.target %>
+                                    <%} else { %>
+                                     N/A  
+                                     <% } %>
+                                </td>
+                                <td><% if(task.progress === 100) { %>
+                                      YES 
+                                     <% } else { %>
+                                      NO 
+                                     <% } %>
+                                </td>
+                                <td>
+                                    <a href="/tasks/edit/<%= task._id %>" >
+                                        <button class="btn btn-primary badge-pill" style="width:80px;"> 
+                                            <i class="fa fa-edit"></i>
+                                        </button>
+                                    </a>
+                                </td>
+                                <td> 
+                                   <form action="/tasks/<%= task._id %>/goal/<%= task.goal._id %>" method="POST" id="delete-form">
+                                    <input type="hidden" name="_method" value="DELETE">
+                                    <button class="btn btn-danger badge-pill" style="width:80px;">
+                                        <i class="fa fa-trash" aria-hidden="true"></i>
+                                    </button>
+                                </form>
+                                </td>
+                                <td>
+                                    <a href="/tasks/editProgress/<%= task._id %>" >
+                                        <button class="btn btn-success badge-pill" style="width:80px;"> 
+                                            <i class="fa fa-spinner"></i>
+                                        </button>
+                                    </a> 
+                                </td>
+                        
+                        
+                    </tbody>
+                    <% }) %>
+                </table>
+            
+            </div>
+            <% } %>
+        
+    </div>
+    
+</div>

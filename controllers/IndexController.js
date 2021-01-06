@@ -130,11 +130,11 @@ const showListMenuPage=async (req,res) => {
 const showTaskDashboardPage=async (req,res) => {
   try {
     //console.log(req.user);
-    const tasks=await Task.find({user:req.user.id}).lean() ;
+    const tasks=await Task.find({user:req.user.id}) ;
 
     res.render('screens/TaskDashboardPage',{
       layout: 'layouts/main',
-      title: 'Todo Manager - Task Dashboards',
+      title: 'Todo Manager - Task Dashboard',
       css:'css/dashboard.css',
       name: req.user.name,
       tasks: tasks,
@@ -144,6 +144,7 @@ const showTaskDashboardPage=async (req,res) => {
     
   }
 }
+
 
 
 module.exports={
