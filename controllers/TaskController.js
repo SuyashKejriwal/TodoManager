@@ -143,8 +143,9 @@ const showEditTaskProgressPage=async(req,res) => {
     const task = await Task.findById(req.params.id).lean();
 
     res.render('screens/EditTaskProgressPage',{
+      layout: 'layouts/main',
       title: 'Todo Manager- Edit Task Progress',
-      css: '/css/task.css',
+      css: '/css/editTaskProgress.css',
       task: task
     })
   }catch(error){
@@ -162,19 +163,23 @@ const editTaskProgress=async(req,res) => {
     const taskinDB=await Task.findById(req.params.id);
 
     const { targetCompleted,completed}=req.body;
-
+        console.log(targetCompleted);
+        console.log(completed);
+        var progress=0;
     // first take progress from input fields 
-    if(taskinDB.taskType=='yes_or_no'&&completed){
-      if(completed=='yes'){
+    if(taskinDB.taskType=='yes_or_no'&&!completed==undefined){
+      if(completed==='yes'){
         progress=100;
       }
     }
-    else if(taskinDB.taskType=='numerical'&&targetCompleted){
-      targetCompleted=parseInt(targetCompleted);
-      let decimalprogress=((targetCompleted/taskinDB.target)*100);
+    else if(taskinDB.taskType==='numerical'){
+      
+      var decimalprogress=((targetCompleted/taskinDB.target)*100);
         progress=parseInt(decimalprogress);
+        console.log(progress);
     }
 
+    console.log(progress);
     // set new progress
     taskinDB.progress=progress;
 

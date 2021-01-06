@@ -34,7 +34,8 @@
                                 <div class="progress-bar progress-bar-striped progress-bar-animated" role="progressbar" 
                                 aria-valuenow="<%= helper.returnProgress(goal.startDate,goal.endDate,goal.totalDays) %>"
                                     aria-valuemin="0" aria-valuemax="100" 
-                                    style="width: <%= helper.returnProgress(goal.startDate,goal.endDate, goal.totalDays) %>%">
+                                    style="width: <%= helper.returnProgress(goal.startDate,goal.endDate, goal.totalDays) %>%"
+                                    >
                                     <%= helper.returncompletedDays(goal.startDate,goal.endDate,goal.totalDays) %> 
                                     out of <%= goal.totalDays %> Days Completed
                                 </div>

@@ -1,0 +1,52 @@
+<div class="task-box">
+    <img src="/images/Logo_Todo.png" alt="" class=logo>
+    <h4 style="text-align: center;">Edit Task Progress</h4>
+    <form action="/tasks/editProgress/<%= task._id %>" method="POST">
+        <input type="hidden" name="_method" value="PUT">
+    </br>
+        <p>Current Task Progress :</p>
+        </br>
+        <div class="progress">
+            <div class="progress-bar progress-bar-striped progress-bar-animated" 
+            role="progressbar" 
+            aria-valuenow="<%= task.progress %>"
+            aria-valuemin="0" 
+            aria-valuemax="100" 
+            style="width: <%= task.progress %>% ">
+            <%= task.progress %> %</div>
+        </div>
+        </br>
+        <% if(task.taskType=='numerical') { %>
+        <label>Target Completed : </label>
+        <select id="targetCompleted"  name= "targetCompleted" >
+            <% for (var i=1;i<=task.target;i++) { %>
+                <option 
+                value="<%= i %>"><%= i %></option>
+            <% } %>
+        </select>
+        <% } else { %>
+        <div>
+            <p>Completed:</p>
+            YES <input type="radio" 
+            id="yes" 
+            name="completed" 
+            <%= task.progress===100 ? 'checked="checked"' : '' %>
+            value="yes"
+            >
+            NO <input type="radio"
+             id="no" 
+             name="completed" 
+             <%= task.progress===0 ? 'checked="checked"' : '' %>
+             value="no"
+             >
+        </div>
+          <% } %>
+        <br>
+        <br>
+        <div style="text-align: center;">
+            <button type="submit" >Save</button>
+        </div>
+        
+
+     </form>
+</div>
