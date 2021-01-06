@@ -6,23 +6,38 @@
         <input type="hidden" name="_method" value="PUT">
         <input type="text" 
         placeholder="Task Name" 
-        value="<%= task.name %>" 
+        value="<%= task.taskName %>" 
         name="taskName">
         
        <div>
         <p>Priority:</p>
-       High <input type="radio" id="high" name="priority" value="high">
+       High <input type="radio" 
+            id="high" 
+            name="priority" 
+            <%= task.priority==='high' ? 'checked="checked"' : '' %>
+            value="high">
   
-       Low <input type="radio" id="low" name="priority" value="low">
+       Low <input type="radio" 
+            id="low" 
+            name="priority" 
+            <%= task.priority==='low' ? 'checked="checked"' : '' %>
+            value="low">
 
   </div>
-
-               
+           
 <br>
             <div>
                 <p>Task Type:</p>
-                YES/NO <input type="radio" id="yes_or_no" name="taskType" value="yes_or_no">               
-               Numerical <input type="radio" id="numerical" name="taskType" value="numerical">
+                YES/NO <input type="radio" 
+                id="yes_or_no" 
+                name="taskType" 
+                <%= task.taskType==='yes_or_no' ? 'checked="checked"' : '' %>
+                value="yes_or_no">               
+               Numerical <input type="radio" 
+               id="numerical" 
+               name="taskType" 
+               <%= task.taskType==='numerical' ? 'checked="checked"' : '' %>
+               value="numerical">
    
            </div>
 <br>

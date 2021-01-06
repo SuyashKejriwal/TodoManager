@@ -7,6 +7,7 @@ const {
    showEditTaskPage,
    editTask,
    showEditTaskProgressPage,
+   editTaskProgress,
    removeTask
 }=require('../controllers/TaskController')
 
@@ -39,5 +40,10 @@ router.put('/:id',ensureAuth,editTask)
 //@route GET tasks/editProgress/:id
 //@access Private
 router.get('/editProgress/:id',ensureAuth,showEditTaskProgressPage)
+
+//@desc Edit Task Progress in Database
+//@route PUT tasks/editProgress/:id
+//@access Private
+router.put('/editProgress/:id',ensureAuth,editTaskProgress);
 
 module.exports=router;

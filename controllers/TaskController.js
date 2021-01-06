@@ -23,6 +23,25 @@ const addTask=async(req,res)=> {
     console.log(req.body);
      const {taskName,priority,taskType,target,goal,user}=req.body;
 
+     let errors=[];
+     //Check validations
+     if(!taskName||!priority||!taskType){
+      errors.push({msg:'Please fill in all the fields'})
+      // send details to prepopulate forms
+      res.render('screens/AddGoalPage', {
+        title: 'Todo Manager - Add Task ',
+        css: '/css/goal.css',
+        errors,
+        goalName,
+        startDate,
+        endDate,
+        description
+    })
+     }
+     else if(taskType=='numerical'&&target===' '){
+
+     }
+
      // create an object for goal
      const newTask=new Task({
         taskName,
@@ -71,8 +90,8 @@ const removeTask=async(req,res) => {
 //@access Private
 const showEditTaskPage=async(req,res) => {
   try{
-    const task = await Task.findById(req.params.id).lean();
-
+    const task = await Task.findById(req.params.id);
+console.log(task);
     res.render('screens/EditTaskPage',{
       title: 'Todo Manager- Edit Task',
       css: '/css/task.css',
@@ -90,7 +109,27 @@ const showEditTaskPage=async(req,res) => {
 //@access Private
 const editTask=async(req,res) =>{
     try {
-        
+        let task=await Task.findById(req.params.id);
+
+        const {taskName,priority,taskType,target}=req.body;
+
+        if(!task){
+          return res.render('screens/NotFoundErrorPage',{
+            title: 'Todo Manager - Not Found'
+          })
+        }else{
+          task.taskName=taskName;
+          task.priority=priority;
+          task.taskType=taskType;
+          task.target=target;
+
+          //now finally update the Task
+          const updatedTask=await task.save();
+
+          //after successfully updating redirect to goal details page
+          res.redirect(`/goals/${task.goal._id}`);
+
+        }
     } catch (error) {
         
     }
@@ -104,7 +143,7 @@ const showEditTaskProgressPage=async(req,res) => {
     const task = await Task.findById(req.params.id).lean();
 
     res.render('screens/EditTaskProgressPage',{
-      title: 'Todo Manager- Edit Task',
+      title: 'Todo Manager- Edit Task Progress',
       css: '/css/task.css',
       task: task
     })
@@ -115,11 +154,46 @@ const showEditTaskProgressPage=async(req,res) => {
   }
 }
 
+//@desc Edit Task Progress in Database
+//@route PUT tasks/editProgress/:id
+//@access Private
+const editTaskProgress=async(req,res) => {
+  try{
+    const taskinDB=await Task.findById(req.params.id);
+
+    const { targetCompleted,completed}=req.body;
+
+    // first take progress from input fields 
+    if(taskinDB.taskType=='yes_or_no'&&completed){
+      if(completed=='yes'){
+        progress=100;
+      }
+    }
+    else if(taskinDB.taskType=='numerical'&&targetCompleted){
+      targetCompleted=parseInt(targetCompleted);
+      let decimalprogress=((targetCompleted/taskinDB.target)*100);
+        progress=parseInt(decimalprogress);
+    }
+
+    // set new progress
+    taskinDB.progress=progress;
+
+    const updatedTask= await taskinDB.save();
+
+    //now redirect to goal details page
+    res.redirect(`/goals/${taskinDB.goal._id}`);
+
+  }catch(error){
+
+  }
+}
+
 module.exports={
     showAddTaskPage,
     addTask,
     removeTask,
     showEditTaskPage,
     editTask,
-    showEditTaskProgressPage
+    showEditTaskProgressPage,
+    editTaskProgress
 }
