@@ -240,11 +240,32 @@ const showSingleGoal=async (req,res) => {
     })
   }}
 
+//@desc Show Task Reports of each goal.
+//@route goals/taskReport/:id
+//@access Private
+const showTaskReportPage=async (req,res) => {
+  const tasks=await Task.find({
+    goal: req.params.id
+  })
+
+  if(tasks){
+    res.render('/screens/TaskReportPage',{
+      layout: 'layouts/main',
+    title: 'Todo Manager - Task Report',
+    css:'css/report.css',
+    tasks,
+    name: req.user.name,
+    helper: require('../helpers/ejshelper'),
+    })
+  }
+}
+
 module.exports={
     showGoalPage,
     addGoal,
     removeGoal,
     editGoal,
     showEditGoalPage,
-    showSingleGoal
+    showSingleGoal,
+    showTaskReportPage
 }

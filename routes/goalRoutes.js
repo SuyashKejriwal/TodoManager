@@ -6,7 +6,7 @@ const { showGoalPage,
          removeGoal,
          editGoal,
          showEditGoalPage,
-        showSingleGoal } =require('../controllers/GoalController')
+        showTaskReportPage } =require('../controllers/GoalController')
 
 //@parentroute /goals
 
@@ -40,6 +40,8 @@ router.put('/:id',ensureAuth,editGoal)
 //@route DELETE goals/:id
 //@access Private
 router.delete('/:id',ensureAuth,removeGoal)
+
+router.get('/taskReport/:id',ensureAuth,showTaskReportPage)
 
 module.exports=router;
 
