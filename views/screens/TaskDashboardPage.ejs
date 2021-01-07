@@ -29,7 +29,6 @@
                     <thead >
                         <tr>
                             <th>Task Name</th>
-                            <th>Goal Name</th>
                             <th>Task Type</th>
                             <th>Target </th>
                             <th>Completed</th>
@@ -41,7 +40,6 @@
                     <tbody>
                         <% tasks.forEach(function(task){ %>
                             <td><a href="/tasks/<%= task._id %>/goal/<%= task.goal._id %>" ><%= task.taskName %></a></td>
-                                <td><%= helper.returnGoalName(task) %></td>
                                 <td><%= task.taskType %></td>
                                 <td><% if(task.target) { %>
                                     <%= task.target %>

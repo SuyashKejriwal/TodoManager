@@ -54,9 +54,9 @@ module.exports = {
     return activegoal;
   },
 
- returnGoalName: function(task){
-  var goalId=task.goal._id;
+ returnGoalName: function(goalId){
   const goal=Goal.findById(goalId);
+  console.log(goal);
   console.log(goal.goalName);
   return goal.goalName;
  }
