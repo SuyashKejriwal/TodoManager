@@ -167,7 +167,7 @@ const editTaskProgress=async(req,res) => {
         console.log(completed);
         var progress=0;
     // first take progress from input fields 
-    if(taskinDB.taskType=='yes_or_no'&&!completed==undefined){
+    if(taskinDB.taskType=='yes_or_no'){
       if(completed==='yes'){
         progress=100;
       }

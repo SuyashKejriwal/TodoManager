@@ -249,10 +249,10 @@ const showTaskReportPage=async (req,res) => {
   })
 
   if(tasks){
-    res.render('/screens/TaskReportPage',{
-      layout: 'layouts/main',
+    res.render('screens/TaskReportPage',{
+    layout: 'layouts/main',
     title: 'Todo Manager - Task Report',
-    css:'css/report.css',
+    css: '/css/report.css',
     tasks,
     name: req.user.name,
     helper: require('../helpers/ejshelper'),
