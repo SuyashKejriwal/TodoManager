@@ -26,7 +26,7 @@
                     <% goals.forEach(function(goal){ %>
                     
                         <tr>
-                            <td><%= goal.goalName %></td>
+                            <td><a href="goals/taskReport/<%= goal._id %>"><%= goal.goalName %></a></td>
                             <td> <% if(helper.returnProgress(goal.startDate,goal.endDate,goal.totalDays)==0) { %>
                                  <h6 class="noprogress">Goal is not started yet.Please come back on start date</h6>
                                  <% } else { %>

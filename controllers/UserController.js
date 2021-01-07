@@ -76,7 +76,7 @@ const addUser=(req,res)=>{
          if(user){
            // User exists by same email id
            errors.push({msg:'This email id is already registered'})
-           res.render('users/register',{
+           res.render('screens/RegisterPage',{
              title: 'Todo Manager - Register ',
              css: '/css/register.css',
                errors,
